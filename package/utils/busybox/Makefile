@@ -9,6 +9,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=busybox
 PKG_VERSION:=1.24.1
+# XXX: FIXME:
+PKG_TIMESTAMP_EPOCH:=1444870000
 PKG_RELEASE:=1
 PKG_FLAGS:=essential
 
@@ -65,6 +67,7 @@ define Build/Configure
 		CROSS_COMPILE="$(TARGET_CROSS)" \
 		KBUILD_HAVE_NLS=no \
 		ARCH="$(ARCH)" \
+		SOURCE_DATE_EPOCH="$(PKG_TIMESTAMP_EPOCH)" \
 		$(BB_MAKE_VERBOSE) \
 		oldconfig
 endef
@@ -91,6 +94,7 @@ define Build/Compile
 		ARCH="$(ARCH)" \
 		SKIP_STRIP=y \
 		LDLIBS="$(LDLIBS)" \
+		SOURCE_DATE_EPOCH="$(PKG_TIMESTAMP_EPOCH)" \
 		$(BB_MAKE_VERBOSE) \
 		all
 	rm -rf $(PKG_INSTALL_DIR)
@@ -102,6 +106,7 @@ define Build/Compile
 		ARCH="$(ARCH)" \
 		CONFIG_PREFIX="$(PKG_INSTALL_DIR)" \
 		LDLIBS="$(LDLIBS)" \
+		SOURCE_DATE_EPOCH="$(PKG_TIMESTAMP_EPOCH)" \
 		$(BB_MAKE_VERBOSE) \
 		install
 endef
