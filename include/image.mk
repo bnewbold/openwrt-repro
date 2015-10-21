@@ -18,6 +18,7 @@ override NO_TRACE_MAKE:=$(_SINGLE)$(NO_TRACE_MAKE)
 # NB: LC_ALL already set in top-level Makefile
 export LC_TIME=C
 export TZ=UTC
+export SOURCE_DATE_EPOCH=$(shell date -u -d "$(TIMESTAMP)" +%s)
 
 KDIR=$(KERNEL_BUILD_DIR)
 KDIR_TMP=$(KDIR)/tmp
