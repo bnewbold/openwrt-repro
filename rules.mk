@@ -226,11 +226,22 @@ TAR:=tar
 FIND:=find
 PATCH:=patch
 PYTHON:=python
+GIT:=git
+SVN:=svn
 
 INSTALL_BIN:=install -m0755
 INSTALL_DIR:=install -d -m0755
 INSTALL_DATA:=install -m0644
 INSTALL_CONF:=install -m0600
+
+# set env vars for reproducible image generation
+TIMESTAMP?=$(shell if test -d "$(TOPDIR)/.git"; then \
+cd $(TOPDIR); $(GIT) log -1 -s --format=%ci; \
+elif test -d "$(TOPDIR)/.svn"; then \
+$(SVN) info "$(TOPDIR)" | sed -n "s/^Last Changed Date: \(.*\)/\1/p"; \
+else date -u; \
+fi)
+export TIMESTAMP
 
 TARGET_CC_NOCACHE:=$(TARGET_CC)
 TARGET_CXX_NOCACHE:=$(TARGET_CXX)
