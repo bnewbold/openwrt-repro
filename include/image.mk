@@ -14,6 +14,11 @@ include $(INCLUDE_DIR)/version.mk
 override MAKE:=$(_SINGLE)$(SUBMAKE)
 override NO_TRACE_MAKE:=$(_SINGLE)$(NO_TRACE_MAKE)
 
+# extra env vars for reproducible image generation
+# NB: LC_ALL already set in top-level Makefile
+export LC_TIME=C
+export TZ=UTC
+
 KDIR=$(KERNEL_BUILD_DIR)
 KDIR_TMP=$(KDIR)/tmp
 DTS_DIR:=$(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts
